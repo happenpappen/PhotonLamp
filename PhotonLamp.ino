@@ -12,6 +12,7 @@ CRGB fg_color = CRGB(200,200,200);
 CRGB bg_color = CRGB(0,0,0);
 
 bool displayEnabled = true;
+uint16_t maxDistance = 0;
 
 // functions to call via cloud:
 int incBrightness(String command);
@@ -24,11 +25,6 @@ int setDisplayMode(String command);
 int getDisplayMode(String command);
 int setFgColor(String command);
 int setBgColor(String command);
-
-#define TRIGGER_PIN D2
-#define ECHO_PIN    D3
-#define DATA_PIN    D4
-
 
 #define ONE_DAY_MILLIS (24 * 60 * 60 * 1000)
 unsigned long lastSync = millis();
@@ -163,6 +159,8 @@ void loadSettings() {
   bg_color.b = EEPROM.read(address++);
   displayEnabled = EEPROM.read(address++);
 
+  maxDistance=getDistance();
+
   for (int i=0; i++; i < NUM_LEDS) {
     leds[i] = EEPROM.read(address++);
   }
@@ -201,7 +199,7 @@ void setup() {
   Particle.function("setFgColor", setFgColor);
   Particle.function("setBgColor", setBgColor);
 
-  loadSettings();
+  //loadSettings();
 
 dispMode = 1;
 

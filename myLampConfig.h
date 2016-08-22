@@ -10,5 +10,8 @@ const uint8_t kMatrixHeight = 27;
 
 #define MAX_DIMENSION ((kMatrixWidth > kMatrixHeight) ? kMatrixWidth : kMatrixHeight)
 #define NUM_LEDS (kMatrixWidth * kMatrixHeight)
+#define TRIGGER_PIN D2
+#define ECHO_PIN    D3
+#define DATA_PIN    D4
 
 #endif

@@ -53,3 +53,32 @@ void fillnoise8() {
   x += speed / 8;
   y -= speed / 16;
 }
+
+uint16_t getDistance()
+{
+    uint32_t duration, cm;
+    static bool init = false;
+    if (!init) {
+        pinMode(TRIGGER_PIN, OUTPUT);
+        digitalWriteFast(TRIGGER_PIN, LOW);
+        pinMode(ECHO_PIN, INPUT);
+        delay(50);
+        init = true;
+    }
+
+    /* Trigger the sensor by sending a HIGH pulse of 10 or more microseconds */
+    digitalWriteFast(TRIGGER_PIN, HIGH);
+    delayMicroseconds(10);
+    digitalWriteFast(TRIGGER_PIN, LOW);
+
+    duration = pulseIn(ECHO_PIN, HIGH);
+
+    /* Convert the time into a distance */
+    // Sound travels at 1130 ft/s (73.746 us/inch)
+    // or 340 m/s (29 us/cm), out and back so divide by 2
+    // Ref: http://www.parallax.com/dl/docs/prod/acc/28015-PING-v1.3.pdf
+    cm = duration / 29 / 2;
+
+    Particle.publish("Entfernung", String::format("Entfernung: %6d cm / %6d us",cm, duration));
+    return cm;
+}

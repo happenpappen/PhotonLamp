@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="97">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="build">
+      </df>
+      <df name="platforms">
+        <df name="arm">
+          <df name="k20">
+            <in>clockless_arm_k20.h</in>
+            <in>clockless_block_arm_k20.h</in>
+            <in>fastled_arm_k20.h</in>
+            <in>fastpin_arm_k20.h</in>
+            <in>fastspi_arm_k20.h</in>
+            <in>led_sysdefs_arm_k20.h</in>
+            <in>octows2811_controller.h</in>
+            <in>smartmatrix_t3.h</in>
+          </df>
+          <df name="k26">
+            <in>clockless_arm_k26.h</in>
+            <in>fastled_arm_k26.h</in>
+            <in>fastpin_arm_k26.h</in>
+            <in>fastspi_arm_k26.h</in>
+            <in>led_sysdefs_arm_k26.h</in>
+          </df>
+          <df name="sam">
+            <in>clockless_arm_sam.h</in>
+            <in>clockless_block_arm_sam.h</in>
+            <in>fastled_arm_sam.h</in>
+            <in>fastpin_arm_sam.h</in>
+            <in>fastspi_arm_sam.h</in>
+            <in>led_sysdefs_arm_sam.h</in>
+          </df>
+        </df>
+        <df name="avr">
+          <in>clockless_trinket.h</in>
+          <in>fastled_avr.h</in>
+          <in>fastpin_avr.h</in>
+          <in>fastspi_avr.h</in>
+          <in>led_sysdefs_avr.h</in>
+        </df>
+      </df>
+      <in>FastLED.cpp</in>
+      <in>FastLED.h</in>
+      <in>FastSPI_LED2.h</in>
+      <in>MQTT.cpp</in>
+      <in>MQTT.h</in>
+      <in>PhotonLamp.cpp</in>
+      <in>bitswap.h</in>
+      <in>chipsets.h</in>
+      <in>clockless_arm_stm32.h</in>
+      <in>color.h</in>
+      <in>colorpalettes.cpp</in>
+      <in>colorpalettes.h</in>
+      <in>colorutils.cpp</in>
+      <in>colorutils.h</in>
+      <in>controller.h</in>
+      <in>delay.h</in>
+      <in>dmx.h</in>
+      <in>fastled_arm_stm32.h</in>
+      <in>fastled_config.h</in>
+      <in>fastpin.h</in>
+      <in>fastpin_arm_stm32.h</in>
+      <in>fastspi.h</in>
+      <in>fastspi_bitbang.h</in>
+      <in>fastspi_dma.h</in>
+      <in>fastspi_nop.h</in>
+      <in>fastspi_ref.h</in>
+      <in>fastspi_types.h</in>
+      <in>hsv2rgb.cpp</in>
+      <in>hsv2rgb.h</in>
+      <in>led_sysdefs.h</in>
+      <in>led_sysdefs_arm_stm32.h</in>
+      <in>lib8tion.cpp</in>
+      <in>lib8tion.h</in>
+      <in>myLampConfig.h</in>
+      <in>myNoise.cpp</in>
+      <in>myNoise.h</in>
+      <in>myNoisePlusPalette.cpp</in>
+      <in>myNoisePlusPalette.h</in>
+      <in>myRainbowCycle.cpp</in>
+      <in>myRainbowCycle.h</in>
+      <in>mySingleColor.cpp</in>
+      <in>mySingleColor.h</in>
+      <in>myUtils.cpp</in>
+      <in>myUtils.h</in>
+      <in>noise.cpp</in>
+      <in>noise.h</in>
+      <in>pixeltypes.h</in>
+      <in>platforms.h</in>
+      <in>power_mgt.cpp</in>
+      <in>power_mgt.h</in>
+      <in>wiring.cpp</in>
+    </df>
+  </logicalFolder>
+  <projectmakefile></projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>2</platform>
+      </toolsSet>
+      <compile>
+        <compiledirpicklist>
+          <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
+        </compiledirpicklist>
+        <compiledir>${AUTO_FOLDER}</compiledir>
+        <compilecommandpicklist>
+          <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
+        </compilecommandpicklist>
+        <compilecommand>${AUTO_COMPILE}</compilecommand>
+      </compile>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <rundir>.</rundir>
+        <buildfirst>false</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+  </confs>
+</configurationDescriptor>

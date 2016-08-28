@@ -18,7 +18,7 @@ extern uint16_t speed; // speed is set dynamically once we've started up
 // of 1 will be so zoomed in, you'll mostly see solid colors.
 extern uint16_t scale; // scale is set dynamically once we've started up
 
-uint16_t XY( uint8_t x, uint8_t y);
+uint16_t XY(uint8_t x, uint8_t y);
 void fillnoise8();
 uint16_t getDistance();
 

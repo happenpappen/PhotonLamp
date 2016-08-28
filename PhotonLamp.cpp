@@ -307,19 +307,6 @@ void saveSettings()
 void setup()
 {
 
-    // register the cloud function
-    Particle.function("incBright", incBrightness);
-    Particle.function("decBright", decBrightness);
-    Particle.function("getBright", getBrightness);
-    Particle.function("setBright", setBrightness);
-    Particle.function("enaDisplay", enableDisplay);
-    Particle.function("disDisplay", disableDisplay);
-    Particle.function("getDisMode", getDisplayMode);
-    Particle.function("setDisMode", setDisplayMode);
-    Particle.variable("dispMode", dispMode);
-    Particle.function("setFgColor", setFgColor);
-    Particle.function("setBgColor", setBgColor);
-
     loadSettings();
 
     dispMode = 1;

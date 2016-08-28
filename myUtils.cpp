@@ -67,16 +67,16 @@ uint16_t getDistance()
         init = true;
     }
 
-    /* Trigger the sensor by sending a HIGH pulse of 10 or more microseconds */
-    digitalWriteFast(TRIGGER_PIN, HIGH);
-    delayMicroseconds(10);
-    digitalWriteFast(TRIGGER_PIN, LOW);
-
-    duration = pulseIn(ECHO_PIN, HIGH);
-
+    ATOMIC_BLOCK() {
+        /* Trigger the sensor by sending a HIGH pulse of 10 or more microseconds */
+        digitalWriteFast(TRIGGER_PIN, HIGH);
+        delayMicroseconds(10);
+        digitalWriteFast(TRIGGER_PIN, LOW);
+        duration = pulseIn(ECHO_PIN, HIGH);
+    }
+    
     /* Convert the time into a distance */
-    // Sound travels at 1130 ft/s (73.746 us/inch)
-    // or 340 m/s (29 us/cm), out and back so divide by 2
+    // Sound travels at 340 m/s (29 us/cm), out and back so divide by 2
     // Ref: http://www.parallax.com/dl/docs/prod/acc/28015-PING-v1.3.pdf
     cm = duration / 29 / 2;
 

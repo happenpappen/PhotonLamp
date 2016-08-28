@@ -14,14 +14,20 @@ CRGB bg_color = CRGB(0, 0, 0);
 
 bool displayEnabled = true;
 uint16_t maxDistance = 0;
+uint16_t lastDistance = 0;
 
 void mqtt_callback(char *, byte *, unsigned int);
-void publishState();
 void saveSettings();
 void loadSettings();
 
+// TImer functions:
+//
+void publishState();
+void setBrightnessByDistance();
+
 MQTT client("stop.pe", 1883, mqtt_callback);
-Timer publisher(5000, publishState);
+Timer PublisherTimer(5000, publishState);
+Timer DistanceSonarTimer(500, setBrightnessByDistance);
 
 // functions to call via cloud:
 int incBrightness(String command);
@@ -117,6 +123,18 @@ int decBrightness(String command)
 int getBrightness(String command)
 {
     return brightness;
+}
+
+void setBrightnessByDistance() 
+{
+    uint16_t currentDistance = getDistance();
+    
+    if ((currentDistance >=5) && (currentDistance <=29))
+    {
+        setBrightness(String((currentDistance - 4) * 10));
+    }
+    
+    lastDistance = currentDistance;
 }
 
 int setBrightness(String value)
@@ -260,6 +278,9 @@ void publishState()
         client.publish("/zigarre/state/Brightness", String(getBrightness("")));
         client.publish("/zigarre/state/ForgroundColor", getFgColor());
         client.publish("/zigarre/state/BackgroundColor", getBgColor());
+        client.publish("/zigarre/state/MaxDistance", String(maxDistance));
+        client.publish("/zigarre/state/LastDistance", String(lastDistance));
+        client.publish("/zigarre/state/CurrentDistance", String(getDistance()));
     }
 }
 
@@ -326,7 +347,8 @@ void setup()
     client.connect("zigarre", "zigarre", "20d6d57b564da56dfade42afbfd50b14"); // uid:pwd based authentication
 
     if (client.isConnected()) {
-        publisher.start();
+        PublisherTimer.start();
+        DistanceSonarTimer.start();
         client.subscribe("/zigarre/set/+");
     }
 }

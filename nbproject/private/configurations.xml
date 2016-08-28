@@ -45,6 +45,7 @@
       <in>FastSPI_LED2.h</in>
       <in>MQTT.cpp</in>
       <in>MQTT.h</in>
+      <in>MQTT_credentials.h</in>
       <in>PhotonLamp.cpp</in>
       <in>bitswap.h</in>
       <in>chipsets.h</in>

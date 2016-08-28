@@ -5,6 +5,7 @@
 #include "myRainbowCycle.h"
 #include "mySingleColor.h"
 #include "MQTT.h"
+#include "MQTT_credentials.h"
 
 CRGB leds[NUM_LEDS];
 
@@ -25,7 +26,7 @@ void loadSettings();
 void publishState();
 void setBrightnessByDistance();
 
-MQTT client("stop.pe", 1883, mqtt_callback);
+MQTT client(MQTT_HOST, 1883, mqtt_callback);
 Timer PublisherTimer(5000, publishState);
 Timer DistanceSonarTimer(500, setBrightnessByDistance);
 
@@ -68,7 +69,7 @@ void mqtt_callback(char *topic, byte *payload, unsigned int length)
 
 
     if (!client.isConnected()) {
-        client.connect("zigarre", "zigarre", "20d6d57b564da56dfade42afbfd50b14");
+        client.connect("zigarre", MQTT_USER, MQTT_PASSWORD);
     }
 
     client.publish("/zigarre/state/LastPayload", "Last Payload: " + String(myPayload));
@@ -270,7 +271,7 @@ void publishState()
 {
 
     if (!client.isConnected()) {
-        client.connect("zigarre", "zigarre", "20d6d57b564da56dfade42afbfd50b14");
+        client.connect("zigarre", MQTT_USER, MQTT_PASSWORD);
     }
 
     if (client.isConnected()) {
@@ -344,7 +345,7 @@ void setup()
     FastLED.addLeds<WS2812B, DATA_PIN>(leds, NUM_LEDS);
     FastLED.setBrightness(brightness);
 
-    client.connect("zigarre", "zigarre", "20d6d57b564da56dfade42afbfd50b14"); // uid:pwd based authentication
+    client.connect("zigarre", MQTT_USER, MQTT_PASSWORD); // uid:pwd based authentication
 
     if (client.isConnected()) {
         PublisherTimer.start();

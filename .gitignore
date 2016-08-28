@@ -1,3 +1,6 @@
+# Files containing credentials:
+MQTT_credentials.h
+
 # Object files
 *.o
 *.ko

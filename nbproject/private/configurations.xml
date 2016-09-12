@@ -74,6 +74,8 @@
       <in>led_sysdefs_arm_stm32.h</in>
       <in>lib8tion.cpp</in>
       <in>lib8tion.h</in>
+      <in>myCylon.cpp</in>
+      <in>myCylon.h</in>
       <in>myLampConfig.h</in>
       <in>myNoise.cpp</in>
       <in>myNoise.h</in>

@@ -3,6 +3,7 @@
 #include "myNoisePlusPalette.h"
 #include "myUtils.h"
 #include "myRainbowCycle.h"
+#include "myCylon.h"
 #include "mySingleColor.h"
 #include "MQTT.h"
 #include "MQTT_credentials.h"
@@ -30,6 +31,8 @@ MQTT client(MQTT_HOST, 1883, mqtt_callback);
 Timer PublisherTimer(5000, publishState);
 Timer DistanceSonarTimer(500, setBrightnessByDistance);
 
+ApplicationWatchdog wd(60000, System.reset);
+
 // functions to call via cloud:
 int incBrightness(String command);
 int decBrightness(String command);
@@ -50,6 +53,7 @@ unsigned long lastSync = millis();
 // 2: RainbowCycle
 // 3: NoisePlusPalette
 // 4: SingleColor
+// 5: Cylon
 
 int dispMode = 1;
 
@@ -67,29 +71,30 @@ void mqtt_callback(char *topic, byte *payload, unsigned int length)
     memcpy(myPayload, payload, length);
     myPayload[length] = 0;
 
-
+    String myID = System.deviceID();
+    
     if (!client.isConnected()) {
-        client.connect("zigarre", MQTT_USER, MQTT_PASSWORD);
+        client.connect(myID, MQTT_USER, MQTT_PASSWORD);
     }
 
-    client.publish("/zigarre/state/LastPayload", "Last Payload: " + String(myPayload));
+    client.publish("/"+myID+"/state/LastPayload", "Last Payload: " + String(myPayload));
 
-    if (myTopic == "/zigarre/set/DisplayMode") {
+    if (myTopic == "/"+myID+"/set/DisplayMode") {
         setDisplayMode(String(myPayload));
         stateChanged = true;
     }
 
-    if (myTopic == "/zigarre/set/Brightness") {
+    if (myTopic == "/"+myID+"/set/Brightness") {
         setBrightness(String(myPayload));
         stateChanged = true;
     }
 
-    if (myTopic == "/zigarre/set/ForgroundColor") {
+    if (myTopic == "/"+myID+"/set/ForgroundColor") {
         setFgColor(String(myPayload));
         stateChanged = true;
     }
 
-    if (myTopic == "/zigarre/set/BackgroundColor") {
+    if (myTopic == "/"+myID+"/set/BackgroundColor") {
         setBgColor(String(myPayload));
         stateChanged = true;
     }
@@ -270,18 +275,21 @@ void loadSettings()
 void publishState()
 {
 
+    String myID = System.deviceID();
+    
     if (!client.isConnected()) {
-        client.connect("zigarre", MQTT_USER, MQTT_PASSWORD);
+        client.connect(myID, MQTT_USER, MQTT_PASSWORD);
     }
 
     if (client.isConnected()) {
-        client.publish("/zigarre/state/DisplayMode", String(getDisplayMode("")));
-        client.publish("/zigarre/state/Brightness", String(getBrightness("")));
-        client.publish("/zigarre/state/ForgroundColor", getFgColor());
-        client.publish("/zigarre/state/BackgroundColor", getBgColor());
-        client.publish("/zigarre/state/MaxDistance", String(maxDistance));
-        client.publish("/zigarre/state/LastDistance", String(lastDistance));
-        client.publish("/zigarre/state/CurrentDistance", String(getDistance()));
+        client.publish("/"+myID+"/state/DisplayMode", String(getDisplayMode("")));
+        client.publish("/"+myID+"/state/Brightness", String(getBrightness("")));
+        client.publish("/"+myID+"/state/ForgroundColor", getFgColor());
+        client.publish("/"+myID+"/state/BackgroundColor", getBgColor());
+        client.publish("/"+myID+"/state/MaxDistance", String(maxDistance));
+        client.publish("/"+myID+"/state/LastDistance", String(lastDistance));
+        client.publish("/"+myID+"/state/CurrentDistance", String(getDistance()));
+        client.publish("/"+myID+"/state/FirmwareVersion", System.version());
     }
 }
 
@@ -324,6 +332,9 @@ void setup()
     case 4:
         setupSingleColor();
         break;
+    case 5:
+        setupCylon();
+        break;
     default:
         break;
     }
@@ -332,12 +343,12 @@ void setup()
     FastLED.addLeds<WS2812B, DATA_PIN>(leds, NUM_LEDS);
     FastLED.setBrightness(brightness);
 
-    client.connect("zigarre", MQTT_USER, MQTT_PASSWORD); // uid:pwd based authentication
+    client.connect(System.deviceID(), MQTT_USER, MQTT_PASSWORD); // uid:pwd based authentication
 
     if (client.isConnected()) {
         PublisherTimer.start();
         DistanceSonarTimer.start();
-        client.subscribe("/zigarre/set/+");
+        client.subscribe("/"+System.deviceID()+"/set/+");
     }
 }
 
@@ -364,6 +375,9 @@ void loop()
             break;
         case 4:
             loopSingleColor();
+            break;
+        case 5:
+            loopCylon();
             break;
         default:
             break;

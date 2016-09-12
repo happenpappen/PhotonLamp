@@ -22,30 +22,30 @@ uint32_t Wheel(byte WheelPos)
 {
     WheelPos = 255 - WheelPos;
     if (WheelPos < 85) {
-        //return strip.Color(255 - WheelPos * 3, 0, WheelPos * 3);
         return ((uint32_t)(255 - WheelPos * 3) << 16) | ((uint32_t)0 <<  8) | (WheelPos * 3);
     }
     if (WheelPos < 170) {
         WheelPos -= 85;
-        //return strip.Color(0, WheelPos * 3, 255 - WheelPos * 3);
         return ((uint32_t)0 << 16) | ((uint32_t)(WheelPos * 3) <<  8) | (255 - WheelPos * 3);
     }
     WheelPos -= 170;
-    //return strip.Color(WheelPos * 3, 255 - WheelPos * 3, 0);
     return ((uint32_t)(WheelPos * 3) << 16) | ((uint32_t)(255 - WheelPos * 3) <<  8) | 0;
 }
 
 void loopRainbowCycle()
 {
     uint16_t i = 0;
-
+    uint32_t t = 0;
+    
     j = j + 1 % 768;
 
-    //for(j=0; j<256*5; j++) { // 5 cycles of all colors on wheel
-    for (i = 0; i < NUM_LEDS; i++) {
-        leds[i] = Wheel(((i * 256 / NUM_LEDS) + j) & 255);
+    for (i = 0; i < kMatrixHeight; i++) {
+        t = Wheel(((i * 256 / kMatrixHeight) + j) & 255);
+        leds[i] = t;
+        leds[2*kMatrixHeight-i] = t;
+        leds[i+2*kMatrixHeight] = t;
+        leds[4*kMatrixHeight-i] = t;
     }
-    //strip.show();
+
     delay(20);
-    //}
 }

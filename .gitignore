@@ -1,3 +1,8 @@
+# NetBeans specific 
+nbproject/private/
+build/
+nbbuild/
+
 # Files containing credentials:
 MQTT_credentials.h
 

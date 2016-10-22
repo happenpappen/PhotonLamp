@@ -3,6 +3,9 @@ nbproject/private/
 build/
 nbbuild/
 
+# generated firmware files:
+firmware/
+
 # Files containing credentials:
 MQTT_credentials.h
 

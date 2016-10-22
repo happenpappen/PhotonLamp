@@ -72,7 +72,7 @@ void mqtt_callback(char *topic, byte *payload, unsigned int length)
     myPayload[length] = 0;
 
     String myID = System.deviceID();
-    
+
     if (!client.isConnected()) {
         client.connect(myID, MQTT_USER, MQTT_PASSWORD);
     }
@@ -131,15 +131,15 @@ int getBrightness(String command)
     return brightness;
 }
 
-void setBrightnessByDistance() 
+void setBrightnessByDistance()
 {
     uint16_t currentDistance = getDistance();
-    
+
     if ((currentDistance >=5) && (currentDistance <=29))
     {
         setBrightness(String((currentDistance - 4) * 10));
     }
-    
+
     lastDistance = currentDistance;
 }
 
@@ -170,9 +170,7 @@ int disableDisplay(String command)
 
 String getFgColor()
 {
-
-    return String::format("#%0#2X%0#2X%0#2X", fg_color.red, fg_color.green, fg_color.blue);
-
+    return String::format("#%0.2x%0.2x%0.2x", fg_color.red, fg_color.green, fg_color.blue);
 }
 
 int setFgColor(String command)
@@ -197,8 +195,7 @@ int setFgColor(String command)
 
 String getBgColor()
 {
-
-    return String::format("#%0#2X%0#2X%0#2X", bg_color.red, bg_color.green, bg_color.blue);
+    return String::format("#%0.2x%0.2x%0.2x", bg_color.red, bg_color.green, bg_color.blue);
 }
 
 int setBgColor(String command)
@@ -276,7 +273,7 @@ void publishState()
 {
 
     String myID = System.deviceID();
-    
+
     if (!client.isConnected()) {
         client.connect(myID, MQTT_USER, MQTT_PASSWORD);
     }

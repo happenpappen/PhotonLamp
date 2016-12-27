@@ -7,7 +7,11 @@ uint16_t scale = 30; // scale is set dynamically once we've started up
 
 uint16_t XY(uint8_t x, uint8_t y)
 {
-    return (y * kMatrixWidth) + x;
+    if (y % 2 == 0) {
+        return (y * kMatrixHeight) + x;    
+    } else {
+        return (y * kMatrixHeight) + kMatrixHeight - x;            
+    }
 }
 
 static uint16_t x;
@@ -80,6 +84,5 @@ uint16_t getDistance()
     // Ref: http://www.parallax.com/dl/docs/prod/acc/28015-PING-v1.3.pdf
     cm = duration / 29 / 2;
 
-    Particle.publish("Entfernung", String::format("Entfernung: %6d cm / %6d us", cm, duration));
     return cm;
 }

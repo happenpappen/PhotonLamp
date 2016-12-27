@@ -3,6 +3,7 @@
 #include "myNoisePlusPalette.h"
 #include "myUtils.h"
 #include "myRainbowCycle.h"
+#include "myRainSnow.h"
 #include "myCylon.h"
 #include "mySingleColor.h"
 #include "MQTT.h"
@@ -22,7 +23,7 @@ void mqtt_callback(char *, byte *, unsigned int);
 void saveSettings();
 void loadSettings();
 
-// TImer functions:
+// Timer functions:
 //
 void publishState();
 void setBrightnessByDistance();
@@ -54,6 +55,7 @@ unsigned long lastSync = millis();
 // 3: NoisePlusPalette
 // 4: SingleColor
 // 5: Cylon
+// 6: Rain/Snow
 
 int dispMode = 1;
 
@@ -240,6 +242,12 @@ int setDisplayMode(String command)
     case 4:
         setupSingleColor();
         break;
+    case 5:
+        setupCylon();
+        break;
+    case 6:
+        setupRainSnow();
+        break;
     default:
         break;
     }
@@ -288,6 +296,8 @@ void publishState()
         client.publish("/"+myID+"/state/CurrentDistance", String(getDistance()));
         client.publish("/"+myID+"/state/FirmwareVersion", System.version());
     }
+
+    Particle.publish("Entfernung", String::format("Entfernung: %6d cm", lastDistance));
 }
 
 void saveSettings()
@@ -314,6 +324,8 @@ void setup()
 
     loadSettings();
 
+    // FIXME: Remove when failsafe setting not needed!
+    //
     dispMode = 1;
 
     switch (dispMode) {
@@ -332,10 +344,14 @@ void setup()
     case 5:
         setupCylon();
         break;
+    case 6:
+        setupRainSnow();
+        break;
     default:
         break;
     }
 
+    randomSeed(analogRead(A0) + micros());
     Time.zone(+1);
     FastLED.addLeds<WS2812B, DATA_PIN>(leds, NUM_LEDS);
     FastLED.setBrightness(brightness);
@@ -344,7 +360,7 @@ void setup()
 
     if (client.isConnected()) {
         PublisherTimer.start();
-        DistanceSonarTimer.start();
+        //DistanceSonarTimer.start();
         client.subscribe("/"+System.deviceID()+"/set/+");
     }
 }
@@ -375,6 +391,9 @@ void loop()
             break;
         case 5:
             loopCylon();
+            break;
+        case 6:
+            loopRainSnow();
             break;
         default:
             break;

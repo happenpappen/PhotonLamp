@@ -38,12 +38,13 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <codeAssistance>
+        <buildAnalyzer>false</buildAnalyzer>
       </codeAssistance>
       <makefileType>
         <makeTool>
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
-          <buildCommand>echo build</buildCommand>
-          <cleanCommand>echo clean</cleanCommand>
+          <buildCommand>particle compile photon</buildCommand>
+          <cleanCommand>rm -f photon_firmware_*.bin</cleanCommand>
           <executablePath></executablePath>
         </makeTool>
         <preBuild>

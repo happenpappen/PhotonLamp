@@ -9,8 +9,8 @@ uint16_t j = 0;
 
 void setupRainbowCycle()
 {
-    for (int i = 0; i < kMatrixWidth; i++) {
-        for (int j = 0; j < kMatrixHeight; j++) {
+    for (int i = 0; i < kMatrixHeight; i++) {
+        for (int j = 0; j < kMatrixWidth; j++) {
             leds[XY(i, j)] = bg_color;
         }
     }

@@ -7,11 +7,23 @@ uint16_t scale = 30; // scale is set dynamically once we've started up
 
 uint16_t XY(uint8_t x, uint8_t y)
 {
+    uint16_t retcode = 0;
+
+    if (x >= kMatrixHeight) { x = kMatrixHeight - 1; }
+    if (x < 0) { x = 0; }
+    if (y >= kMatrixWidth) { y = kMatrixWidth - 1; }
+    if (y < 0) { y = 0; }
+
     if (y % 2 == 0) {
-        return (y * kMatrixHeight) + x;    
+        retcode = (y * kMatrixHeight) + x;    
     } else {
-        return (y * kMatrixHeight) + kMatrixHeight - x;            
+        retcode = (y + 1) * kMatrixHeight - x -1;            
     }
+#ifdef DEBUG
+    Serial.printf("XY: %d, X: %d, Y: %d", retcode, x, y);
+    Serial.println();
+#endif
+    return retcode;
 }
 
 static uint16_t x;

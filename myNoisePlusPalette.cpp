@@ -14,8 +14,8 @@ void mapNoiseToLEDsUsingPalette()
 {
     static uint8_t ihue = 0;
 
-    for (int i = 0; i < kMatrixWidth; i++) {
-        for (int j = 0; j < kMatrixHeight; j++) {
+    for (int i = 0; i < kMatrixHeight; i++) {
+        for (int j = 0; j < kMatrixWidth; j++) {
             // We use the value at the (i,j) coordinate in the noise
             // array for our brightness, and the flipped value from (j,i)
             // for our pixel's index into the color palette.
@@ -55,7 +55,7 @@ void mapNoiseToLEDsUsingPalette()
 // 1 = 5 sec per palette
 // 2 = 10 sec per palette
 // etc
-#define HOLD_PALETTES_X_TIMES_AS_LONG 1
+#define HOLD_PALETTES_X_TIMES_AS_LONG 20
 
 // This function sets up a palette of purple and green stripes.
 void SetupPurpleAndGreenPalette()
@@ -110,19 +110,19 @@ void ChangePaletteAndSettingsPeriodically()
         lastSecond = secondHand;
         if (secondHand ==  0)  {
             currentPalette = RainbowColors_p;
-            speed = 20;
+            speed = 4;
             scale = 30;
             colorLoop = 1;
         }
         if (secondHand ==  5)  {
             SetupPurpleAndGreenPalette();
-            speed = 10;
+            speed = 2;
             scale = 50;
             colorLoop = 1;
         }
         if (secondHand == 10)  {
             SetupBlackAndWhiteStripedPalette();
-            speed = 20;
+            speed = 4;
             scale = 30;
             colorLoop = 1;
         }
@@ -146,25 +146,25 @@ void ChangePaletteAndSettingsPeriodically()
         }
         if (secondHand == 30)  {
             currentPalette = OceanColors_p;
-            speed = 20;
+            speed = 4;
             scale = 90;
             colorLoop = 0;
         }
         if (secondHand == 35)  {
             currentPalette = PartyColors_p;
-            speed = 20;
+            speed = 4;
             scale = 30;
             colorLoop = 1;
         }
         if (secondHand == 40)  {
             SetupRandomPalette();
-            speed = 20;
+            speed = 4;
             scale = 20;
             colorLoop = 1;
         }
         if (secondHand == 45)  {
             SetupRandomPalette();
-            speed = 50;
+            speed = 10;
             scale = 50;
             colorLoop = 1;
         }
@@ -176,7 +176,7 @@ void ChangePaletteAndSettingsPeriodically()
         }
         if (secondHand == 55)  {
             currentPalette = RainbowStripeColors_p;
-            speed = 30;
+            speed = 6;
             scale = 20;
             colorLoop = 1;
         }
@@ -186,8 +186,8 @@ void ChangePaletteAndSettingsPeriodically()
 void setupNoisePlusPalette()
 {
 
-    speed = 4;
-    scale = 30;
+    speed = 3;
+    scale = 311;
 
     // Initialize our coordinates to some random values
     x = random16();

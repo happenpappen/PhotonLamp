@@ -14,11 +14,12 @@ void setupRainSnow() {
 
     randomSeed(analogRead(A0));
 
-    for (i = 0; i < kMatrixWidth; i++) {
-        for (j = 0; j < kMatrixHeight; j++) {
+    for (i = 0; i < kMatrixHeight; i++) {
+        for (j = 0; j < kMatrixWidth; j++) {
             leds[XY(i, j)] = 0;
         }
     }
+    LEDS.show();
 }
 
 void loopRainSnow() {
@@ -31,7 +32,7 @@ void loopRainSnow() {
         for (j = 0; j < kMatrixWidth; j++) {
             if (i == kMatrixHeight - 1) {
                 if (leds[XY(i,j)] == CRGB(CRGB::White)) {
-                    if (count > 2) {
+                    if (count > 3) {
                         leds[XY(i,j)] = CRGB::Black;
                         count = 0;
                     } else {
@@ -40,7 +41,7 @@ void loopRainSnow() {
                     }
                 } else {
                     rand = random(100);
-                    if ((rand > 90) && (count == 0)) {
+                    if ((rand > 94) && (count == 0)) {
                         leds[XY(i,j)] = CRGB::White;
                     } else {
                         leds[XY(i,j)] = CRGB::Black;

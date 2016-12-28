@@ -24,8 +24,8 @@ void loopNoise()
 
     fillnoise8();
 
-    for (int i = 0; i < kMatrixWidth; i++) {
-        for (int j = 0; j < kMatrixHeight; j++) {
+    for (int i = 0; i < kMatrixHeight; i++) {
+        for (int j = 0; j < kMatrixWidth; j++) {
             leds[XY(i, j)] = CHSV(noise[j][i], 255, noise[i][j]);
         }
     }

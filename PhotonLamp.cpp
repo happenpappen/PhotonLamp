@@ -321,7 +321,9 @@ void saveSettings()
 
 void setup()
 {
-
+#ifdef DEBUG
+    Serial.begin(9600);
+#endif
     loadSettings();
 
     // FIXME: Remove when failsafe setting not needed!
@@ -399,8 +401,8 @@ void loop()
             break;
         }
     } else {
-        for (int i = 0; i < kMatrixWidth; i++) {
-            for (int j = 0; j < kMatrixHeight; j++) {
+        for (int i = 0; i < kMatrixHeight; i++) {
+            for (int j = 0; j < kMatrixWidth; j++) {
                 leds[XY(i, j)] = 0;
             }
         }

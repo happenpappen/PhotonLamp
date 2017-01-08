@@ -186,7 +186,7 @@ int setFgColor(String command)
         int r = atoi(strsep(&rgbstr, ","));
         int b = atoi(strsep(&rgbstr, ","));
 
-        fg_color = CRGB(g, r, b);
+        fg_color = CRGB(r, g, b);
     }
 
     free(rgbstr);

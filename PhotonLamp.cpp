@@ -272,7 +272,7 @@ void loadSettings()
 
     maxDistance = getDistance();
 
-    for (int i = 0; i++; i < NUM_LEDS) {
+    for (int i = 0; i < NUM_LEDS; i++) {
         leds[i] = EEPROM.read(address++);
     }
 }
@@ -314,7 +314,7 @@ void saveSettings()
     EEPROM.write(address++, bg_color.b);
     EEPROM.write(address++, displayEnabled);
 
-    for (int i = 0; i++; i < NUM_LEDS) {
+    for (int i = 0; i < NUM_LEDS; i++) {
         EEPROM.write(address++, leds[i]);
     }
 }
@@ -325,10 +325,6 @@ void setup()
     Serial.begin(9600);
 #endif
     loadSettings();
-
-    // FIXME: Remove when failsafe setting not needed!
-    //
-    dispMode = 1;
 
     switch (dispMode) {
     case 1:

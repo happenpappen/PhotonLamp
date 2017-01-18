@@ -1,4 +1,5 @@
 #include "myLampConfig.h"
+#include "myFire.h"
 #include "myNoise.h"
 #include "myNoisePlusPalette.h"
 #include "myUtils.h"
@@ -248,6 +249,9 @@ int setDisplayMode(String command)
     case 6:
         setupRainSnow();
         break;
+    case 7:
+        setupFire();
+        break;
     default:
         break;
     }
@@ -345,6 +349,9 @@ void setup()
     case 6:
         setupRainSnow();
         break;
+    case 7:
+        setupFire();
+        break;
     default:
         break;
     }
@@ -392,6 +399,9 @@ void loop()
             break;
         case 6:
             loopRainSnow();
+            break;
+        case 7:
+            loopFire();
             break;
         default:
             break;

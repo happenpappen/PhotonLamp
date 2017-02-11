@@ -2,21 +2,6 @@
 <configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="0">
-      <in>FastLED.cpp</in>
-      <in>MQTT.cpp</in>
-      <in>PhotonLamp.cpp</in>
-      <in>colorpalettes.cpp</in>
-      <in>colorutils.cpp</in>
-      <in>hsv2rgb.cpp</in>
-      <in>lib8tion.cpp</in>
-      <in>myNoise.cpp</in>
-      <in>myNoisePlusPalette.cpp</in>
-      <in>myRainbowCycle.cpp</in>
-      <in>mySingleColor.cpp</in>
-      <in>myUtils.cpp</in>
-      <in>noise.cpp</in>
-      <in>power_mgt.cpp</in>
-      <in>wiring.cpp</in>
     </df>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -52,36 +37,6 @@
           <preBuildCommand></preBuildCommand>
         </preBuild>
       </makefileType>
-      <item path="FastLED.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="MQTT.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="PhotonLamp.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="colorpalettes.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="colorutils.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="hsv2rgb.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="lib8tion.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="myNoise.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="myNoisePlusPalette.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="myRainbowCycle.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="mySingleColor.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="myUtils.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="noise.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="power_mgt.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="wiring.cpp" ex="false" tool="1" flavor2="0">
-      </item>
     </conf>
   </confs>
 </configurationDescriptor>

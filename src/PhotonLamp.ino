@@ -8,6 +8,7 @@
 #include "myCylon.h"
 #include "mySingleColor.h"
 #include "myHorizontalSplit.h"
+#include "myHorizontalDoubleSplit.h"
 #include "myVerticalSplit.h"
 #include "MQTT.h"
 #include "MQTT_credentials.h"
@@ -59,8 +60,10 @@ unsigned long lastSync = millis();
 // 4: SingleColor
 // 5: Cylon
 // 6: Rain/Snow
-// 7: HorizontalSplit
-// 8: VerticalSplit
+// 7: Fire
+// 8: HorizontalSplit
+// 9: HorizontalDoubleSplit
+// 100: VerticalSplit
 
 int dispMode = 1;
 
@@ -260,6 +263,9 @@ int setDisplayMode(String command)
         setupHorizontalSplit();
         break;
     case 9:
+        setupHorizontalDoubleSplit();
+        break;
+    case 10:
         setupVerticalSplit();
         break;
     default:
@@ -366,6 +372,9 @@ void setup()
         setupHorizontalSplit();
         break;
     case 9:
+        setupHorizontalDoubleSplit();
+        break;
+    case 10:
         setupVerticalSplit();
         break;
     default:

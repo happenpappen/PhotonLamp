@@ -27,7 +27,7 @@
   </logicalFolder>
   <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
   <sourceRootList>
-    <Elem>.</Elem>
+    <Elem>src</Elem>
   </sourceRootList>
   <projectmakefile></projectmakefile>
   <confs>

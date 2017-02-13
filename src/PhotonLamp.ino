@@ -190,8 +190,8 @@ int setFgColor(String command)
     rgbstr = strcpy(rgbstr, (const char *) command);
 
     if (command.length() == 11) {
-        int g = atoi(strsep(&rgbstr, ","));
         int r = atoi(strsep(&rgbstr, ","));
+        int g = atoi(strsep(&rgbstr, ","));
         int b = atoi(strsep(&rgbstr, ","));
 
         fg_color = CRGB(r, g, b);
@@ -215,8 +215,8 @@ int setBgColor(String command)
     rgbstr = strcpy(rgbstr, (const char *) command);
 
     if (command.length() == 11) {
-        int g = atoi(strsep(&rgbstr, ","));
         int r = atoi(strsep(&rgbstr, ","));
+        int g = atoi(strsep(&rgbstr, ","));
         int b = atoi(strsep(&rgbstr, ","));
 
         bg_color = CRGB(r, g, b);
@@ -383,7 +383,7 @@ void setup()
 
     randomSeed(analogRead(A0) + micros());
     Time.zone(+1);
-    FastLED.addLeds<WS2812B, DATA_PIN>(leds, NUM_LEDS);
+    FastLED.addLeds<WS2812B, DATA_PIN, COLOR_ORDER>(leds, NUM_LEDS);
     FastLED.setBrightness(brightness);
 
     client.connect(System.deviceID(), MQTT_USER, MQTT_PASSWORD); // uid:pwd based authentication
@@ -432,6 +432,9 @@ void loop()
             loopHorizontalSplit();
             break;
         case 9:
+            loopHorizontalDoubleSplit();
+            break;
+        case 10:
             loopVerticalSplit();
             break;
         default:

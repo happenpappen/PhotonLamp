@@ -13,5 +13,6 @@ const uint8_t kMatrixHeight = 27;
 #define TRIGGER_PIN D2
 #define ECHO_PIN    D3
 #define DATA_PIN    D4
+#define COLOR_ORDER GRB
 
 #endif

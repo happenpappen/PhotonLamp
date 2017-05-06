@@ -31,26 +31,35 @@ void loopRainSnow() {
     for (i = 0; i < kMatrixHeight; i++) {
         for (j = 0; j < kMatrixWidth; j++) {
             if (i == kMatrixHeight - 1) {
-                if (leds[XY(i,j)] == CRGB(CRGB::White)) {
-                    if (count > 3) {
-                        leds[XY(i,j)] = CRGB::Black;
-                        count = 0;
-                    } else {
-                        leds[XY(i,j)] = CRGB::White;
-                        count++;
-                    }
-                } else {
+                if (leds[XY(i, j)] == CRGB(CRGB::Black)) {
                     rand = random(100);
                     if ((rand > 94) && (count == 0)) {
-                        leds[XY(i,j)] = CRGB::White;
+                        leds[XY(i, j)] = CRGB::White;
                     } else {
-                        leds[XY(i,j)] = CRGB::Black;
+                        leds[XY(i, j)] = CRGB::Black;
+                    }
+                } else {
+                    if (count > 5) {
+                        leds[XY(i, j)] = CRGB::Black;
+                        count = 0;
+                    } else {
+                        switch (count) {
+                            case 4:
+                            case 3:
+                                leds[XY(i, j)] = leds[XY(i, j)] / 2;
+                                count++;
+                                break;
+                            default:
+                                leds[XY(i, j)] = CRGB::White;
+                                count++;
+                                break;
+                        }
                     }
                 }
             } else {
-                leds[XY(i,j)] = leds[XY(i+1,j)];
+                leds[XY(i, j)] = leds[XY(i + 1, j)];
             }
         }
     }
-    delay(100);
+    delay(50);
 }

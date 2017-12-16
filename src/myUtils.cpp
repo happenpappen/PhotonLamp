@@ -4,6 +4,10 @@
 uint8_t noise[MAX_DIMENSION][MAX_DIMENSION];
 uint16_t speed = 3; // speed is set dynamically once we've started up
 uint16_t scale = 30; // scale is set dynamically once we've started up
+static bool init = false;
+static uint16_t x;
+static uint16_t y;
+static uint16_t z;
 
 uint16_t XY(uint8_t x, uint8_t y)
 {
@@ -15,9 +19,9 @@ uint16_t XY(uint8_t x, uint8_t y)
     if (y < 0) { y = 0; }
 
     if (y % 2 == 0) {
-        retcode = (y * kMatrixHeight) + x;    
+        retcode = (y * kMatrixHeight) + x;
     } else {
-        retcode = (y + 1) * kMatrixHeight - x -1;            
+        retcode = (y + 1) * kMatrixHeight - x -1;
     }
 #ifdef DEBUG
     Serial.printf("XY: %d, X: %d, Y: %d", retcode, x, y);
@@ -25,10 +29,6 @@ uint16_t XY(uint8_t x, uint8_t y)
 #endif
     return retcode;
 }
-
-static uint16_t x;
-static uint16_t y;
-static uint16_t z;
 
 // Fill the x/y array of 8-bit noise values using the inoise8 function.
 void fillnoise8()
@@ -74,7 +74,7 @@ void fillnoise8()
 uint16_t getDistance()
 {
     uint32_t duration, cm;
-    static bool init = false;
+
     if (!init) {
         pinMode(TRIGGER_PIN, OUTPUT);
         digitalWriteFast(TRIGGER_PIN, LOW);
@@ -90,7 +90,7 @@ uint16_t getDistance()
         digitalWriteFast(TRIGGER_PIN, LOW);
         duration = pulseIn(ECHO_PIN, HIGH);
     }
-    
+
     /* Convert the time into a distance */
     // Sound travels at 340 m/s (29 us/cm), out and back so divide by 2
     // Ref: http://www.parallax.com/dl/docs/prod/acc/28015-PING-v1.3.pdf

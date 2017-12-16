@@ -10,6 +10,7 @@
 #include "myHorizontalSplit.h"
 #include "myHorizontalDoubleSplit.h"
 #include "myVerticalSplit.h"
+#include "mySpiral.h"
 #include "MQTT.h"
 #include "MQTT_credentials.h"
 
@@ -63,7 +64,8 @@ unsigned long lastSync = millis();
 // 7: Fire
 // 8: HorizontalSplit
 // 9: HorizontalDoubleSplit
-// 100: VerticalSplit
+// 10: VerticalSplit
+// 11: Spiral
 
 int dispMode = 1;
 
@@ -268,6 +270,9 @@ int setDisplayMode(String command)
     case 10:
         setupVerticalSplit();
         break;
+    case 11:
+        setupSpiral();
+        break;
     default:
         break;
     }
@@ -377,6 +382,9 @@ void setup()
     case 10:
         setupVerticalSplit();
         break;
+    case 11:
+        setupSpiral();
+        break;
     default:
         break;
     }
@@ -390,7 +398,7 @@ void setup()
 
     if (client.isConnected()) {
         PublisherTimer.start();
-        //DistanceSonarTimer.start();
+        DistanceSonarTimer.start();
         client.subscribe("/"+System.deviceID()+"/set/+");
     }
 }
@@ -436,6 +444,9 @@ void loop()
             break;
         case 10:
             loopVerticalSplit();
+            break;
+        case 11:
+            loopSpiral();
             break;
         default:
             break;

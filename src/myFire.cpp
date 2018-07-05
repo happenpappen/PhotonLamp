@@ -33,7 +33,7 @@ void loopFire() {
     }
 
     // Step 2.  Heat from each cell drifts 'up' and diffuses a little
-    for (int i = 0; i < kMatrixHeight; i++) {
+    for (int i = 2; i < kMatrixHeight; i++) {
             heat[i] = (heat[i - 1] + heat[i - 2] + heat[i - 2]) / 3;
     }
 

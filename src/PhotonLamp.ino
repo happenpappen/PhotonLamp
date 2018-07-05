@@ -76,9 +76,8 @@ void mqtt_callback(char *topic, byte *payload, unsigned int length)
     String myTopic = String(topic);
 
     bool stateChanged = false;
-    char *myPayload = NULL;
 
-    myPayload = (char *) malloc(length + 1);
+    char *myPayload = (char *) malloc(length + 1);
 
     memcpy(myPayload, payload, length);
     myPayload[length] = 0;
@@ -130,8 +129,10 @@ int incBrightness(String command)
 
 int decBrightness(String command)
 {
-    brightness--;
-    brightness = (brightness < 0) ? 0 : brightness;
+    if (brightness > 0) {
+        brightness--;
+    }
+
     FastLED.setBrightness(brightness);
 
     saveSettings();

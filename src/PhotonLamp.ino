@@ -110,6 +110,15 @@ void mqtt_callback(char *topic, byte *payload, unsigned int length)
         stateChanged = true;
     }
 
+    if (myTopic == "/"+myID+"/set/EnableDisplay") {
+        if ((String(myPayload) == "1") or (String(myPayload).toLowerCase() == "true")) {
+            enableDisplay("");
+        } else {
+            disableDisplay("");
+        }
+        stateChanged = true;
+    }
+
     if (stateChanged) {
         publishState();
     }
@@ -321,6 +330,7 @@ void publishState()
         client.publish("/"+myID+"/state/LastDistance", String(lastDistance));
         client.publish("/"+myID+"/state/CurrentDistance", String(getDistance()));
         client.publish("/"+myID+"/state/FirmwareVersion", System.version());
+        client.publish("/"+myID+"/state/DisplayEnabled", displayEnabled ? "true" : "false");
     }
 
     Particle.publish("Entfernung", String::format("Entfernung: %6d cm", lastDistance));

@@ -1,7 +1,4 @@
-# NetBeans specific 
-nbproject/private/
-build/
-nbbuild/
+.vscode/ipch
 
 # generated firmware files:
 firmware/

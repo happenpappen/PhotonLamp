@@ -3,5 +3,8 @@
 		{
 			"path": "."
 		}
-	]
+	],
+	"settings": {
+		"cortex-debug.openocdPath": "/home/cs/.particle/toolchains/openocd/0.10.0-particle.1/bin/openocd"
+	}
 }

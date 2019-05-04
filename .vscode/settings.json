@@ -1,3 +1,6 @@
 {
-    "C_Cpp.default.configurationProvider": "particle.particle-vscode-core"
+    "C_Cpp.default.configurationProvider": "particle.particle-vscode-core",
+    "particle.targetDevice": "zigarre",
+    "particle.firmwareVersion": "1.0.1",
+    "particle.targetPlatform": "photon"
 }

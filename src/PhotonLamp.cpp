@@ -14,6 +14,11 @@
 #include "MQTT.h"
 #include "MQTT_credentials.h"
 
+// Define version and start of saved settings:
+//
+#define SETTINGS_MAGIC 47
+#define SETTINGS_START 1
+
 CRGB leds[NUM_LEDS];
 
 uint8_t brightness = 20;
@@ -293,22 +298,92 @@ int setDisplayMode(String command)
 
 void loadSettings()
 {
-    int address = 1;
+    uint16_t maxSize = EEPROM.length();
+    uint16_t address = SETTINGS_START;
+    uint8_t version = 0;
 
-    brightness = EEPROM.read(address++);
-    dispMode = EEPROM.read(address++);
-    fg_color.r = EEPROM.read(address++);
-    fg_color.g = EEPROM.read(address++);
-    fg_color.b = EEPROM.read(address++);
-    bg_color.r = EEPROM.read(address++);
-    bg_color.g = EEPROM.read(address++);
-    bg_color.b = EEPROM.read(address++);
-    displayEnabled = EEPROM.read(address++);
+    EEPROM.get(address++, version);
 
-    maxDistance = getDistance();
+    if (version == SETTINGS_MAGIC) { // Valid settings in EEPROM?
+        EEPROM.get(address, brightness);
+        address = address + sizeof(brightness);
+        EEPROM.get(address, dispMode);
+        address = address + sizeof(dispMode);
+        EEPROM.get(address, fg_color.r);
+        address = address + sizeof(fg_color.r);
+        EEPROM.get(address, fg_color.g);
+        address = address + sizeof(fg_color.g);
+        EEPROM.get(address, fg_color.b);
+        address = address + sizeof(fg_color.b);
+        EEPROM.get(address, bg_color.r);
+        address = address + sizeof(bg_color.r);
+        EEPROM.get(address, bg_color.g);
+        address = address + sizeof(bg_color.g);
+        EEPROM.get(address, bg_color.b);
+        address = address + sizeof(bg_color.b);
+        EEPROM.get(address, displayEnabled);
+        address = address + sizeof(displayEnabled);
+
+        maxDistance = getDistance();
+
+        for (int i = 0; i < NUM_LEDS; i++) {
+            EEPROM.get(address, leds[i].r);
+            address = address + sizeof(leds[i].r);
+            EEPROM.get(address, leds[i].g);
+            address = address + sizeof(leds[i].r);
+            EEPROM.get(address, leds[i].b);
+            address = address + sizeof(leds[i].b);
+        }
+    } else { // Set sane default settings, if they can't be loaded from NVRAM:
+        brightness = 120;
+        dispMode = 1;
+        fg_color.r = 0;
+        fg_color.g = 255;
+        fg_color.b = 0;
+        bg_color.r = 0;
+        bg_color.g = 0;
+        bg_color.b = 0;
+        displayEnabled = 1;
+
+        for (int i = 0; i < NUM_LEDS; i++) {
+            leds[i] = fg_color;
+        }
+
+    }
+}
+
+void saveSettings()
+{
+    uint16_t address = SETTINGS_START;
+    uint16_t maxlength = EEPROM.length();
+
+    EEPROM.write(address++, SETTINGS_MAGIC);
+    EEPROM.put(address, brightness);
+    address = address + sizeof(brightness);
+    EEPROM.put(address, dispMode);
+    address = address + sizeof(dispMode);
+    EEPROM.put(address, fg_color.r);
+    address = address + sizeof(fg_color.r);
+    EEPROM.put(address, fg_color.g);
+    address = address + sizeof(fg_color.g);
+    EEPROM.put(address, fg_color.b);
+    address = address + sizeof(fg_color.b);
+    EEPROM.put(address, bg_color.r);
+    address = address + sizeof(bg_color.r);
+    EEPROM.put(address, bg_color.g);
+    address = address + sizeof(bg_color.g);
+    EEPROM.put(address, bg_color.b);
+    address = address + sizeof(bg_color.b);
+    EEPROM.put(address, displayEnabled);
+    address = address + sizeof(displayEnabled);
 
     for (int i = 0; i < NUM_LEDS; i++) {
-        leds[i] = EEPROM.read(address++);
+        EEPROM.put(address, leds[i].r);
+        address = address + sizeof(leds[i].r);
+        EEPROM.put(address, leds[i].g);
+        address = address + sizeof(leds[i].g);
+        EEPROM.put(address, leds[i].b);
+        address = address + sizeof(leds[i].b);
     }
 }
 
@@ -334,25 +409,6 @@ void publishState()
     }
 
     Particle.publish("Entfernung", String::format("Entfernung: %6d cm", lastDistance));
-}
-
-void saveSettings()
-{
-    int address = 1;
-
-    EEPROM.write(address++, brightness);
-    EEPROM.write(address++, dispMode);
-    EEPROM.write(address++, fg_color.r);
-    EEPROM.write(address++, fg_color.g);
-    EEPROM.write(address++, fg_color.b);
-    EEPROM.write(address++, bg_color.r);
-    EEPROM.write(address++, bg_color.g);
-    EEPROM.write(address++, bg_color.b);
-    EEPROM.write(address++, displayEnabled);
-
-    for (int i = 0; i < NUM_LEDS; i++) {
-        EEPROM.write(address++, leds[i]);
-    }
 }
 
 void setup()
